@@ -29,7 +29,8 @@
  * Start Helper Functions
  * 
 */
-const pageSections = Array.from
+const pageSections = Array.from(document.querySelectorAll('section'))
+const navMenu = document.getElementById('navmenu_list')
 
 
 
@@ -38,7 +39,17 @@ const pageSections = Array.from
  * Begin Main Functions
  * 
 */
-
+function itemsList() {
+    //To Make a list of Sections to be used in the navigation menu
+    for (section of sections) {
+        nameOfSection = section.getAttribute('data-nav')
+        linkOfSections = section.getAttribute('id')
+        //Line below is creating an item to be then added to the UL of the nav menu
+        listItem = document.createElement('li')
+        listItem.innerHTML = `<a class = 'menuItem' href ='${linkOfSection}'> ${nameOfSection} </a>`
+        navMenu.appendChild(listItem);
+    }
+}
 // build the nav
 
 
