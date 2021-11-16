@@ -7,10 +7,6 @@
  * To learn more, visit: https://css-tricks.com/reboot-resets-reasoning/
  *
 */
-html {
-    /* Adding the smooth scroll to the whole HTML project */
-    scroll-behavior: smooth;
-}
 
 /* ---- Base Rules ---- */
 body {
