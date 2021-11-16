@@ -26,6 +26,7 @@ const sectionsOfPage = document.querySelectorAll(".section")
 //Storing all sections of the page in a variable called sections of page to access it easily
 const listOfBar = document.getElementById("navbar__list")
 //Getting the Unordered list containing the bar to easily access it
+let containerCount = document.getElementsByClassName("landing__container").length
 
 /**
  * End Global Variables
@@ -33,7 +34,6 @@ const listOfBar = document.getElementById("navbar__list")
  * 
 */
 
-function addActiveStat() {
     /* 
     The function loops through all of the sections
     Then it stores their coordinates in a variable named position
@@ -41,16 +41,39 @@ function addActiveStat() {
         by checking if the section's top coordinates exists in the screen
     If the section is in view it adds a class called your-active-class to mark the section as active
     */
-    for (sec of sectionsOfPage) {
-        if (sec.getBoundingClientRect().top >= -400 &&
-        sec.getBoundingClientRect().bottom <= 150) {
-            sec.classList.add('your-active-class')
-        }
-        else {
-            sec.classList.remove('your-active-classList')
-        }
+
+function checkIfSectionInView() {
+    let isInViewport = function(elem) {
+      let bounding = elem.getBoundingClientRect();
+      return (
+        bounding.top <= 49 &&
+        bounding.bottom <=
+          (window.innerHeight || document.documentElement.clientHeight) &&
+        bounding.right <=
+          (window.innerWidth || document.documentElement.clientWidth)
+      );
+    };
+  
+    for (i = 1; i < containerCount + 1; i++) {
+      let sec = document.getElementById("section" + i);
+  
+      window.addEventListener(
+        "scroll",
+        function(event) {
+          if (isInViewport(sec)) {
+            sec.classList.add("your-active-class");
+          } else {
+            sec.classList.remove("your-active-class");
+          }
+        },
+        false
+      );
     }
-}
+  }
+  
+    
+    
+
 /**
  * End Helper Functions
  * Begin Main Functions
@@ -72,14 +95,6 @@ function buildNavBar() {
     }
 }
 buildNavBar()
-// Add class 'active' to section when near top of viewport
-//function editClassStat() {
-    /* 
-    The function simply calls the two helper function
-    */
-    //removeActiveStat()
-//    addActiveStat()
-//}
 
 
 // Scroll to anchor ID using scrollTO event
@@ -87,12 +102,24 @@ buildNavBar()
  * End Main Functions
  * Begin Events
 */
-document.addEventListener('scroll', addActiveStat())
+document.addEventListener('scroll', checkIfSectionInView());
 // Build menu 
 
 
 
 // Scroll to section on link click
+function scroll() {
+    document.querySelectorAll('a').forEach(elem => {
+        elem.addEventListener('click', e => {
+            e.preventDefault();
+            document.querySelector(elem.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth',
+                block: 'end'
+            });
+        });
+    });
+}
+document.addEventListener('click', scroll())
 
 // Set sections as active
 
